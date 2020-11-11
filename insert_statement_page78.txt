@@ -1,0 +1,275 @@
+select EMPLOYEE_ID,
+       AUTO_FORMATED_ID,
+       MANUALLY_FORMATTED_ID,
+      
+       NAME_TITLE,
+       FIRST_NAME,
+       MIDDLE_NAME,
+       LAST_NAME,
+       
+       SEX,
+       FATHERS_NAME,
+       MOTHERS_NAME,
+       BIRTH_DATE,
+      
+       NATIONALITY,
+      
+       BIRTH_REG_NO,
+       
+       RELIGION,
+       MARITAL_STATUS,
+       SPOUSE_NAME,
+       BLOOD_GROUP,
+      
+       HOME_PHONE,
+       WORK_PHONE,
+      
+       PERSONAL_MOBILE,
+       WORK_MOBILE,
+       PERSONAL_EMAIL,
+       WORK_EMAIL,
+      
+       
+     
+       NAME_TITLE_BN,
+       FIRST_NAME_BN,
+       MIDDLE_NAME_BN,
+       LAST_NAME_BN,
+       FATHERS_NAME_BN,
+       MOTHERS_NAME_BN,
+       PHOTO,
+       FINGER_PRINT,
+       SIGNATURE
+      
+  from HRM_EMPLOYEE
+  where EMPLOYEE_ID =:P78_EMPLOYEE_ID
+
+
+========================================================================
+       EMPLOYEE_ID,
+       AUTO_FORMATED_ID,
+       MANUALLY_FORMATTED_ID,
+      
+       NAME_TITLE,
+       FIRST_NAME,
+       MIDDLE_NAME,
+       LAST_NAME,
+       
+       SEX,
+       FATHERS_NAME,
+       MOTHERS_NAME,
+       BIRTH_DATE,
+      
+       NATIONALITY,
+      
+       BIRTH_REG_NO,
+       
+       RELIGION,
+       MARITAL_STATUS,
+       SPOUSE_NAME,
+       BLOOD_GROUP,
+      
+       HOME_PHONE,
+       WORK_PHONE,
+      
+       PERSONAL_MOBILE,
+       WORK_MOBILE,
+       PERSONAL_EMAIL,
+       WORK_EMAIL,
+      
+       
+     
+       NAME_TITLE_BN,
+       FIRST_NAME_BN,
+       MIDDLE_NAME_BN,
+       LAST_NAME_BN,
+       FATHERS_NAME_BN,
+       MOTHERS_NAME_BN,
+       PHOTO,
+       FINGER_PRINT,
+       SIGNATURE
+ =================================================================     
+ insert into  HRM_EMPLOYEE(
+       EMPLOYEE_ID,--
+       AUTO_FORMATED_ID,
+       MANUALLY_FORMATTED_ID,
+      
+       NAME_TITLE,
+       FIRST_NAME,
+       MIDDLE_NAME,
+       LAST_NAME,
+       
+       SEX,
+       FATHERS_NAME,
+       MOTHERS_NAME,
+       BIRTH_DATE,
+      
+       NATIONALITY,
+      
+       BIRTH_REG_NO,
+       
+       RELIGION,
+       MARITAL_STATUS,
+       SPOUSE_NAME,
+       BLOOD_GROUP,
+      
+       HOME_PHONE,
+       WORK_PHONE,
+      
+       PERSONAL_MOBILE,
+       WORK_MOBILE,
+       PERSONAL_EMAIL,
+       WORK_EMAIL,
+          
+       NAME_TITLE_BN,
+       FIRST_NAME_BN,
+       MIDDLE_NAME_BN,
+       LAST_NAME_BN,
+       FATHERS_NAME_BN,
+       MOTHERS_NAME_BN,
+       PHOTO,
+       FINGER_PRINT,
+       SIGNATURE
+
+)
+
+
+
+values(
+(select nvl(max(EMPLOYEE_ID),0)+1 from hrm_employee),
+ 'testformet',
+'manualformet',
+:P78_NAME_TITLE,
+:P78_FIRST_NAME,
+:P78_MIDDLE_NAME,
+:P78_LAST_NAME,
+
+:P78_SEX,
+:P78_FATHERS_NAME,
+:P78_MOTHERS_NAME,
+:P78_BIRTH_DATE,
+      
+:P78_NATIONALITY,
+      
+:P78_BIRTH_REG_NO,
+       
+:P78_RELIGION,
+:P78_MARITAL_STATUS,
+:P78_SPOUSE_NAME,
+:P78_BLOOD_GROUP,
+      
+:P78_HOME_PHONE,
+:P78_WORK_PHONE,
+      
+:P78_PERSONAL_MOBILE,
+:P78_WORK_MOBILE,
+:P78_PERSONAL_EMAIL,
+:P78_WORK_EMAIL,
+          
+:P78_NAME_TITLE_BN,
+:P78_FIRST_NAME_BN,
+:P78_MIDDLE_NAME_BN,
+:P78_LAST_NAME_BN,
+:P78_FATHERS_NAME_BN,
+:P78_MOTHERS_NAME_BN,
+:P78_PHOTO,
+:P78_FINGER_PRINT,
+:P78_SIGNATURE
+)
+
+ ==============================================================================
+<!--<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+* {box-sizing: border-box;}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #e9e9e9;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #2196F3;
+  color: white;
+}
+
+.topnav .search-container {
+  float: right;
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+.topnav .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav .search-container {
+    float: none;
+  }
+  .topnav a, .topnav input[type=text], .topnav .search-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .topnav input[type=text] {
+    border: 1px solid #ccc;  
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="search-container">
+    <form action="#">
+      <input type="text" placeholder="Search.." name="search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
+-->

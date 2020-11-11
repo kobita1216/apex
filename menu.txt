@@ -1,0 +1,34 @@
+SELECT LEVEL,
+                  PROGDESC label,
+                  DECODE (PAGEID,
+                          NULL, '#',
+                          'f?p=' || APP_ID || ':' || PAGEID || ':' || :APP_SESSION)
+                     target,
+                  NULL AS is_current,
+                  '#APP_IMAGES#del.gif' image
+             FROM K_MENU
+            WHERE PROGCODE IN
+                     (SELECT PARENTCODE
+                        FROM K_USER_RIGHTS
+                       WHERE GROUPCODE =
+                                (SELECT PID_GROUP
+                                   FROM K_USER_GROUP
+                                  WHERE PID_USER =
+                                           (SELECT PID
+                                              FROM K_USER
+                                             WHERE LOGIN_ID = :APP_USER
+                                                      ))
+                      UNION
+                      SELECT PROGCODE
+                        FROM K_USER_RIGHTS
+                       WHERE GROUPCODE =
+                                (SELECT PID_GROUP
+                                   FROM K_USER_GROUP
+                                  WHERE PID_USER =
+                                           (SELECT PID
+                                              FROM K_USER
+                                             WHERE LOGIN_ID = :APP_USER
+                                                     )))
+       START WITH PARENTCODE IS NULL
+       CONNECT BY PRIOR PROGCODE = PARENTCODE
+ORDER SIBLINGS BY MENUSLNO

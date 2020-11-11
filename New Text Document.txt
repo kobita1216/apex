@@ -1,0 +1,187 @@
+
+CREATE TABLE  "K_GROUP" 
+   (	"PID" NUMBER NOT NULL ENABLE, 
+	"PID_PARENT" NUMBER, 
+	"GROUP_TITLE" NVARCHAR2(30) NOT NULL ENABLE, 
+	"GROUP_DESCRIPTION" NVARCHAR2(250), 
+	"IS_ACTIVE" NVARCHAR2(1), 
+	"PID_EMPLOYEE_INSERT_BY" NUMBER, 
+	"PID_EMPLOYEE_UPDATE_BY" NUMBER, 
+	"UPDATE_DATE" DATE, 
+	"INSERT_DATE" DATE, 
+	"DEPARTMENT" NVARCHAR2(5), 
+	"SL_NO" NUMBER
+   )
+==========================================================
+CREATE TABLE  "K_USER_GROUP" 
+   (	"PID" NUMBER NOT NULL ENABLE, 
+	"PID_USER" NUMBER NOT NULL ENABLE, 
+	"PID_GROUP" NUMBER NOT NULL ENABLE, 
+	"IS_ACTIVE" NVARCHAR2(1), 
+	"PID_EMPLOYEE_INSERT_BY" NUMBER, 
+	"PID_EMPLOYEE_UPDATE_BY" NUMBER, 
+	"UPDATE_DATE" DATE, 
+	"INSERT_DATE" DATE, 
+	 CONSTRAINT "ACL_USER_GROUP_PK" PRIMARY KEY ("PID")
+  USING INDEX  ENABLE, 
+	 CONSTRAINT "ACL_USER_GROUP_UK" UNIQUE ("PID_USER")
+  USING INDEX  ENABLE
+   )
+
+==========================================================
+CREATE TABLE  "K_GROUP_APP_PAGE_ACCESS" 
+   (	"PID" NUMBER, 
+	"PID_GROUP" NUMBER, 
+	"APP_ID" NUMBER, 
+	"PAGE_ID" NUMBER, 
+	"PERMISSION" NUMBER
+   )
+
+==========================================================
+CREATE TABLE  "K_USER" 
+   (	"PID" NUMBER NOT NULL ENABLE, 
+	"LOGIN_ID" NVARCHAR2(30) NOT NULL ENABLE, 
+	"EMAIL_ID" NVARCHAR2(30), 
+	"USER_NAME" NVARCHAR2(250), 
+	"NATIONAL_ID" NVARCHAR2(25), 
+	"IS_ACTIVE" NVARCHAR2(1), 
+	"PIN" VARCHAR2(4000), 
+	"PID_EMPLOYEE" NUMBER, 
+	"PID_EMPLOYEE_INSERT_BY" NUMBER, 
+	"PID_EMPLOYEE_UPDATE_BY" NUMBER, 
+	"UPDATE_DATE" DATE, 
+	"INSERT_DATE" DATE, 
+	"RE_PIN" VARCHAR2(4000), 
+	"RECOMMENDED_UNIT" NUMBER, 
+	"RECOMMENDED_DATE" DATE, 
+	"APPROVED_BY" NUMBER, 
+	"IS_TRAINED" NVARCHAR2(10), 
+	"TRANING_DATE" DATE, 
+	"TRANING_PLACE" NVARCHAR2(150), 
+	"USER_TYPE" NVARCHAR2(50), 
+	"UNITUSER_TYPE" VARCHAR2(3)
+   )
+
+========================================================
+CREATE TABLE  "K_USER_RIGHTS" 
+   (	
+	"PROGCODE" NUMBER, 
+        "GROUPCODE" VARCHAR2(3),
+	"PARENTCODE" NUMBER, 
+	"ADDSTATS" VARCHAR2(1), 
+	"ADD_GRANT" VARCHAR2(1) DEFAULT 'N', 
+	"MODSTATS" VARCHAR2(1) DEFAULT 'N', 
+	"MOD_GRANT" VARCHAR2(1) DEFAULT 'N', 
+	"ENQSTATS" VARCHAR2(1), 
+	"VIEW_GRANT" VARCHAR2(1) DEFAULT 'N', 
+	"APPSTATS" VARCHAR2(1), 
+	"CREATE_BY" VARCHAR2(50), 
+	"CREATE_DATE" DATE, 
+	"APP_ID" NUMBER
+   )
+============================================================
+
+CREATE TABLE  "K_MENU" 
+
+   (	
+        "PROGCODE" NUMBER,
+        "PROGDESC" VARCHAR2(200), 
+	"MENUSLNO" NUMBER(3,0), 
+	"LEVLCODE" NUMBER(4,0), 
+	"MENULEAF" VARCHAR2(1), 
+	"HELPTEXT" VARCHAR2(2000), 
+	"OPRSTAMP" VARCHAR2(50), 
+	"TIMSTAMP" DATE DEFAULT sysdate, 
+	"PARENTCODE" NUMBER, 
+	"APPFLG" VARCHAR2(1), 
+	"ADD1" VARCHAR2(1), 
+	"MOD" VARCHAR2(1), 
+	"DEL" VARCHAR2(1), 
+	"ENQ" VARCHAR2(1), 
+	"PAGEID" NUMBER, 
+	"ALLOWHO" VARCHAR2(1), 
+	"PROGTYPE" VARCHAR2(1), 
+	"APP_ID" NUMBER
+   )
+
+
+==================================================================
+
+
+SELECT LEVEL,
+                  PROGDESC label,
+                  DECODE (PAGEID,
+                          NULL, '#',
+                          'f?p=' || APP_ID || ':' || PAGEID || ':' || :APP_SESSION)
+                     target,
+                  NULL AS is_current,
+                  '#APP_IMAGES#del.gif' image
+             FROM K_MENU
+            WHERE PROGCODE IN
+                     (SELECT PARENTCODE
+                        FROM K_USER_RIGHTS
+                       WHERE GROUPCODE =
+                                (SELECT PID_GROUP
+                                   FROM K_USER_GROUP
+                                  WHERE PID_USER =
+                                           (SELECT PID
+                                              FROM K_USER
+                                             WHERE LOGIN_ID =
+                                                      DECODE (:APP_USER,
+                                                              'SARA', 'BP8210018957',
+                                                              :APP_USER)))
+                      UNION
+                      SELECT PROGCODE
+                        FROM K_USER_RIGHTS
+                       WHERE GROUPCODE =
+                                (SELECT PID_GROUP
+                                   FROM K_USER_GROUP
+                                  WHERE PID_USER =
+                                           (SELECT PID
+                                              FROM K_USER
+                                             WHERE LOGIN_ID =
+                                                      DECODE (:APP_USER,
+                                                              'SARA', 'BP8210018957',
+                                                              :APP_USER))))
+       START WITH PARENTCODE IS NULL
+       CONNECT BY PRIOR PROGCODE = PARENTCODE
+ORDER SIBLINGS BY MENUSLNO
+===========================================================================================
+SELECT LEVEL,
+                  PROGDESC label,
+                  DECODE (PAGEID,
+                          NULL, '#',
+                          'f?p=' || APP_ID || ':' || PAGEID || ':' || :APP_SESSION)
+                     target,
+                  NULL AS is_current,
+                  '#APP_IMAGES#del.gif' image
+             FROM K_MENU
+            WHERE PROGCODE IN
+                     (SELECT PARENTCODE
+                        FROM K_USER_RIGHTS
+                       WHERE GROUPCODE =
+                                (SELECT PID_GROUP
+                                   FROM K_USER_GROUP
+                                  WHERE PID_USER =
+                                           (SELECT PID
+                                              FROM K_USER
+                                             WHERE LOGIN_ID = :APP_USER
+                                                      /*DECODE (:APP_USER,
+                                                              'SARA', 'zaman',
+                                                              :APP_USER)*/))
+                      UNION
+                      SELECT PROGCODE
+                        FROM K_USER_RIGHTS
+                       WHERE GROUPCODE =
+                                (SELECT PID_GROUP
+                                   FROM K_USER_GROUP
+                                  WHERE PID_USER =
+                                           (SELECT PID
+                                              FROM K_USER
+                                             WHERE LOGIN_ID = :APP_USER
+                                                      /*DECODE (:APP_USER,
+                                                              'SARA', 'zaman',
+                                                              :APP_USER)*/)))
+       START WITH PARENTCODE IS NULL
+       CONNECT BY PRIOR PROGCODE = PARENTCODE
+ORDER SIBLINGS BY MENUSLNO

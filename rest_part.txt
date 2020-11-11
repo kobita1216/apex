@@ -1,0 +1,20 @@
+tabular select list
+1.PROGCODE--select list--query
+==================================
+select PROGDESC||' -Page NO-'||pageid as dis,PROGCODE as ret 
+from k_menu
+where app_id=:P71_APP_ID
+=========================
+2.PARENTCODE--select list---query
+================================
+select PROGDESC as dis,PROGCODE as ret 
+from k_menu
+where app_id=:P71_APP_ID
+==================================
+3.ADD_GRANT--select list--static
+Yes-Y,No-N
+4.MOD_GRANT--select list--static
+Yes-Y,No-N
+5.VIEW_GRANT--select list--static
+Yes-Y,No-N
+make other column hidden
