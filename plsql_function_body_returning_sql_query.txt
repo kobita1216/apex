@@ -1,0 +1,17 @@
+DECLARE
+  ret apex_application_lovs.list_of_values_query%TYPE;
+BEGIN
+  IF :P123_Type = 'C' THEN
+    select list_of_values_query 
+      into ret
+      from apex_application_lovs 
+     where list_of_values_name = 'LOV_1';
+  ELSE    
+    select list_of_values_query  
+      into ret
+      from apex_application_lovs 
+     where list_of_values_name = 'LOV_2';
+  END IF;
+
+  return ret;
+END;
