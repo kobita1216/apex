@@ -1,0 +1,11 @@
+Use this one if you set your target type to URL and your URL target to #
+
+$('#t_Body_nav #t_TreeNav li.a-TreeView-node--topLevel > div.a-TreeView-content:has(a[href="#"])').click(function(){
+    $(this).prev('span.a-TreeView-toggle').click();
+});
+
+Use this one if you set your target type to - No Target -
+
+$('#t_Body_nav #t_TreeNav li.a-TreeView-node--topLevel > div.a-TreeView-content:not(:has(a))').click(function(){
+    $(this).prev('span.a-TreeView-toggle').click();
+});
