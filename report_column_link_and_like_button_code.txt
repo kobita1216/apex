@@ -1,0 +1,8 @@
+
+link-javascript-columntype link-URL
+=========================================
+javascript:$s('P10_UPDATE',#APPROVE#);
+=========================================
+Link Attribute
+==========================================
+class="t-Button t-Button--simple t-Button--hot t-Button--stretch"
