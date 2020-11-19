@@ -1,0 +1,1 @@
+javascript:var x=window.open('http://118.179.84.65:8899/reports/rwservlet?rep_ideafsl&desformat=pdf&destype=cache&PI_Id=#PI_ID#&report=D:/IDEAFSL_HOME/Rpt/PIS.jsp','_blank');
