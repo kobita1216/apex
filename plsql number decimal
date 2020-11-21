@@ -1,0 +1,1 @@
+to_char(n, 'FM9G999G999D999', 'NLS_NUMERIC_CHARACTERS='',.''');
