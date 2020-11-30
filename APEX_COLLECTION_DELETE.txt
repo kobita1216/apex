@@ -1,0 +1,50 @@
+How to delete apex collection member
+Delete Apex Collection Member
+=====Step 1:=====
+SELECT SEQ_ID, c001, c002, c003, collection_name from APEX_COLLECTIONS where COLLECTION_NAME='DATA_COLLECTION';
+
+=====Step 2=====
+Del Link Column like Seq_id our link column
+
+Link:
+Target Page which page you are generate classic report
+
+Link Text :
+<span class="fa fa-trash"></span>
+
+Link Attributes:
+id='#SEQ_ID#' class="delete t-Button t-Button--danger t-Button--simple t-Button--small"
+
+=====Step 3=====
+Create Page Item Under Report Region
+Like P14_NEW
+
+=====Step 4=====
+Create click dynamic action
+Event  : Click   
+Selection Type : jQuery Selector
+jQuery Selector : a.delete
+
+Action  : Set Value
+Set Type : JavaScript Expression
+JavaScript Expression : this.triggeringElement.id
+
+Affected Elements 
+Selection Type : Item(s)
+Item(s)  : P14_NEW
+Fire on Initialization : OFF
+
+Create Action Execute PL/SQL Code
+Begin
+    APEX_COLLECTION.DELETE_MEMBER(
+        p_collection_name => 'DATA_COLLECTION',
+        p_seq => :P14_NEW);
+End;
+
+Items to Submit: P14_NEW
+Fire on Initialization : OFF
+
+Create Refresh Action
+Affected Elements
+Selection Type : Region
+Region  : Region Name
