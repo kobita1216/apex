@@ -1,0 +1,17 @@
+var lov = this.triggeringElement.value;
+var lov_id = this.triggeringElement.id;
+var row = lov_id.substr(lov_id.length -10);
+var count = (row.length);
+var cost_id = lov_id.substr(lov_id.length -4);
+if (lov == "Y") {
+    //  $( "#f02_" + row ).prop( 'readOnly', false);
+    $x_disableItem("f05" + row, true);
+    $x_disableItem("f06" + row, true);
+    $s('P4000_MRP1',cost_id);
+} else {
+    //   $( "#f02_" + row ).prop( 'readOnly', true);
+    $x_disableItem("f05" + row, false);
+    $x_disableItem("f06" + row, false);
+    $s('P4000_MRP1',null); 
+}
+
