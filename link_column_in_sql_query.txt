@@ -1,0 +1,8 @@
+SELECT 'Approval Pending' as label, 
+        cnt as value,
+        apex_util.prepare_url( 'f?p='||:APP_ID||':4000:'||:APP_SESSION ) as url
+  FROM (  SELECT COUNT (*) cnt 
+                    FROM vu_costing
+                   WHERE SUB_BY_ID is not null AND COSTING_TYPE = 'A'
+                   AND APPROVED_BY_ID is null
+       )
