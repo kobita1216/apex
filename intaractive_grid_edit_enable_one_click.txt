@@ -1,0 +1,1 @@
+apex.region( "ig_emp" ).widget().interactiveGrid( "getActions" ).set("edit", true);
